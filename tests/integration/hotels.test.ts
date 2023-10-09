@@ -2,9 +2,9 @@ import * as jwt from 'jsonwebtoken';
 import { faker } from '@faker-js/faker';
 import httpStatus from 'http-status';
 import supertest from 'supertest';
-import app, { init } from '@/app';
 import { cleanDb, generateValidToken } from '../helpers';
 import { createEnrollmentWithAddress, createTicketType, createUser, createTicket, createHotel } from '../factories';
+import app, { init } from '@/app';
 
 beforeAll(async () => {
   await init();
@@ -106,11 +106,13 @@ describe('GET /hotels', () => {
       await createTicket(enrollment.id, ticketType.id, 'PAID');
       const { status, body } = await server.get('/hotels').set('Authorization', `Bearer ${token}`);
       expect(status).toBe(httpStatus.OK);
-      expect(body).toEqual([{
-        ...hotel,
-        createdAt: hotel.createdAt.toISOString(),
-        updatedAt: hotel.updatedAt.toISOString()
-      }]);
+      expect(body).toEqual([
+        {
+          ...hotel,
+          createdAt: hotel.createdAt.toISOString(),
+          updatedAt: hotel.updatedAt.toISOString(),
+        },
+      ]);
     });
   });
 });
@@ -220,7 +222,7 @@ describe('GET /hotels/:hotelId', () => {
         ...hotel,
         createdAt: hotel.createdAt.toISOString(),
         updatedAt: hotel.updatedAt.toISOString(),
-        Rooms: []
+        Rooms: [],
       });
     });
   });

@@ -1,5 +1,5 @@
-import { notFoundError, paymentRequiredError } from "@/errors";
-import { hotelsRepository } from "@/repositories";
+import { notFoundError, paymentRequiredError } from '@/errors';
+import { hotelsRepository } from '@/repositories';
 
 async function getHotels(userId: number) {
   const enrollment = await hotelsRepository.getEnrollmentByUserId(userId);
@@ -17,7 +17,7 @@ async function getHotels(userId: number) {
   const hotels = await hotelsRepository.getHotels();
   if (hotels.length === 0) throw notFoundError('sorry, but we dont have hotels right now');
   return hotels;
-};
+}
 
 async function getHotelsById(userId: number, hotelId: number) {
   await hotelsService.getHotels(userId);
@@ -26,7 +26,7 @@ async function getHotelsById(userId: number, hotelId: number) {
   if (!hotel) throw notFoundError('this hotel doesnt exist');
 
   return hotel;
-};
+}
 
 export const hotelsService = {
   getHotels,
