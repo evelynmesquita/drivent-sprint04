@@ -27,10 +27,10 @@ async function postBooking(userId: number, roomId: number) {
 async function putBooking(userId: number, roomId: number, bookingId: number) {
   const room = await bookingRepository.getRoomInfoById(roomId);
   if (!room) throw notFoundError('Room not found');
-  if (room.capacity === room._count.Booking) throw forbiddenError('This room has already rechaed maximun capacity');
+  if (room.capacity === room._count.Booking) throw forbiddenError('This room has already reached maximum capacity');
 
   const { Booking } = await bookingRepository.getUserInfosById(userId);
-  if (!Booking) throw forbiddenError('You do not have a booking yet!');
+  if (!Booking) throw forbiddenError('You dont have a booking yet');
 
   const { id } = await bookingRepository.putBooking(bookingId, roomId);
   return { bookingId: id };
